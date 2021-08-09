@@ -1,0 +1,15 @@
+.Sidebar {
+  background-image: linear-gradient(
+    to right top,
+    #121212,
+    #0f0f0f,
+    #0b0b0b,
+    #060606,
+    #020202
+  );
+  color: white;
+}
+
+.btn-close {
+  background-color: #1a3bee !important;
+}

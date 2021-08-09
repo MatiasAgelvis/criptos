@@ -1,0 +1,9 @@
+.Card__title{
+    display: flex;
+    justify-content: space-between;
+}
+
+.Icon__favorite{
+    font-size: 30px;
+    cursor: pointer;
+}

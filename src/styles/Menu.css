@@ -1,0 +1,17 @@
+.Menu {
+  background-color: #141619;
+}
+
+.Logo__div{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Logo__div > svg {
+  height: 50px;
+  width: 50px;
+}
+
+.Navbar{
+  align-items: center;  
+}
