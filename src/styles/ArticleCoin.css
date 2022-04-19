@@ -7,3 +7,25 @@
     font-size: 30px;
     cursor: pointer;
 }
+
+.vsplit-body{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.vsplit-left{
+width: 35%;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+
+}
+.vsplit-right{
+    flex: 1;
+}
+
+.vsplit-right svg{
+    height: 100%;
+    width: 100%;
+}
