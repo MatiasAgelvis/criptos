@@ -3,4 +3,5 @@ export const initialCoinState = {
     offset: 0,
     error: false,
     loading: false,
+    prices: {}
 };

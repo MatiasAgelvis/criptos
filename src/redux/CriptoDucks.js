@@ -8,6 +8,7 @@ const BASE_URL = "https://api.coincap.io/v2/";
 //TYPES
 const GET_ALL_COINS = "GET_ALL_COINS";
 const GET_NEXT_PAGE_COINS = "GET_NEXT_PAGE_COINS";
+const GET_COIN_PRICES = "GET_COIN_PRICES";
 
 //REDUCER
 export default function reducer(state = initialCoinState, action) {
@@ -22,6 +23,11 @@ export default function reducer(state = initialCoinState, action) {
         ...state,
         offset: action.payload.offset,
         data: [...state.data, ...action.payload.data],
+      };
+    case GET_COIN_PRICES:
+      return {
+        ...state,
+        prices: {...state.prices, [action.payload.id] : action.payload.prices}
       };
     default:
       return state;
@@ -48,6 +54,7 @@ export const nextPageCoins = () => async (dispatch, getState) => {
   try {
     const response = await fetch(`${BASE_URL}assets?offset=${paginate}&limit=5`);
     const { data } = await response.json();
+
     dispatch({
       type: GET_NEXT_PAGE_COINS,
       payload: {
@@ -61,3 +68,19 @@ export const nextPageCoins = () => async (dispatch, getState) => {
 };
 
 
+export const getPrices = (id, interval = "d1") =>  async (dispatch) => {
+  try {
+    let promise = await fetch(`${BASE_URL}assets/${id}/history?interval=${interval}`);
+    let rawData = await promise.json();
+
+    dispatch({
+      type: GET_COIN_PRICES,
+      payload: {
+        id: id,
+        prices: rawData.data.map(x => parseFloat(x.priceUsd))
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
