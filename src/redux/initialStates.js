@@ -7,5 +7,5 @@ export const initialCoinState = {
 };
 
 export const initialIntervalState = {
-    interval: 'd1'
+    interval: "d1",
 };

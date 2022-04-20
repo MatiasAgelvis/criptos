@@ -6,7 +6,7 @@ import intervalReducer from "./interval";
 
 const rootReducer = combineReducers({
   coins: coinReducer,
-  interval: intervalReducer
+  interval: intervalReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

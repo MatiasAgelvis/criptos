@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPrices } from "../redux/CriptoDucks";
 import { Container, Card, Button, Badge } from "react-bootstrap";
 import { BsStar } from "react-icons/bs";
-import '../styles/ArticleCoin.css';
-import Trend from 'react-trend';
+import "../styles/ArticleCoin.css";
+import Trend from "react-trend";
 
 const ArticleCoin = (props) => {
   const dollarUSLocale = Intl.NumberFormat("en-US");
@@ -32,30 +32,45 @@ const ArticleCoin = (props) => {
                 {name} <Badge bg="secondary">{symbol}</Badge>
               </div>
               <div>
-                <BsStar  className="Icon__favorite" onClick={() => console.log('ADD TO FAVORITE',id)} />
+                <BsStar
+                  className="Icon__favorite"
+                  onClick={() => console.log("ADD TO FAVORITE", id)}
+                />
               </div>
             </Card.Title>
-            <div className='vsplit-body'>
-            <div className='vsplit-left'>
-
-              Price Today : $ {dollarUSLocale.format(priceUsd)}
-              <br />
-              <br />
-              {explorer}
-
-            <br />
-            <br />
-            <Button variant="outline-info" href={explorer} target="_blank">
-              Go to page
-            </Button>
-            </div>
-            <div className='vsplit-right'>
-            {id in prices? <Trend data={prices[id]} gradient={['#284CB2', '#35DAF7', '#F96CA8']} strokeLinecap='round' autoDraw autoDrawDuration={3000} autoDrawEasing="ease-in" smooth radius={1000} strokeWidth={3}/>  
-            : <div className="text-center">
-              <div className="spinner-grow text-primary" role="status"><span className="visually-hidden">Loading...</span></div>
+            <div className="vsplit-body">
+              <div className="vsplit-left">
+                Price Today : $ {dollarUSLocale.format(priceUsd)}
+                <br />
+                <br />
+                {explorer}
+                <br />
+                <br />
+                <Button variant="outline-info" href={explorer} target="_blank">
+                  Go to page
+                </Button>
               </div>
-             }
-            </div>
+              <div className="vsplit-right">
+                {id in prices ? (
+                  <Trend
+                    data={prices[id]}
+                    gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
+                    strokeLinecap="round"
+                    autoDraw
+                    autoDrawDuration={3000}
+                    autoDrawEasing="ease-in"
+                    smooth
+                    radius={1000}
+                    strokeWidth={3}
+                  />
+                ) : (
+                  <div className="text-center">
+                    <div className="spinner-grow text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </Card.Body>
         </Card>

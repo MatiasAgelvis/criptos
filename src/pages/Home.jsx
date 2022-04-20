@@ -16,7 +16,7 @@ const Home = () => {
     dispatch(getAllCoins());
   }, [dispatch]);
 
-  const handleClick = async() => {
+  const handleClick = async () => {
     setLoadingButton(true);
     await dispatch(nextPageCoins());
     setLoadingButton(false);
