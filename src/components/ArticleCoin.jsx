@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrices } from "../redux/CriptoDucks";
 import { Container, Card, Button, Badge } from "react-bootstrap";
@@ -9,14 +9,14 @@ import Trend from 'react-trend';
 const ArticleCoin = (props) => {
   const dollarUSLocale = Intl.NumberFormat("en-US");
   const { id, symbol, name, priceUsd, explorer } = props;
-  // const [prices, setPrices] = useState([])
 
   const dispatch = useDispatch();
   const prices = useSelector((store) => store.coins.prices);
+  const interval = useSelector((store) => store.interval.interval);
 
   useEffect(() => {
-    dispatch(getPrices(id));
-  }, [id, dispatch]);
+    dispatch(getPrices(id, interval));
+  }, [id, interval, dispatch]);
 
   // useEffect(() => {
   //   console.log(id, id in prices)
@@ -50,7 +50,7 @@ const ArticleCoin = (props) => {
             </Button>
             </div>
             <div className='vsplit-right'>
-            {id in prices? <Trend data={prices[id]} gradient={['#284CB2', '#35DAF7', '#F96CA8']}/>  
+            {id in prices? <Trend data={prices[id]} gradient={['#284CB2', '#35DAF7', '#F96CA8']} strokeLinecap='round' autoDraw autoDrawDuration={3000} autoDrawEasing="ease-in" smooth radius={1000} strokeWidth={3}/>  
             : <div className="text-center">
               <div className="spinner-grow text-primary" role="status"><span className="visually-hidden">Loading...</span></div>
               </div>
