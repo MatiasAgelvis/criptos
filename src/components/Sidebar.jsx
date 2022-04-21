@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Offcanvas, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { dispatchInterval, dispatchDataSlice } from "../redux/interval";
@@ -11,10 +11,15 @@ const Sidebar = (props) => {
   const dispatch = useDispatch();
   const interval = useSelector((store) => store.interval.interval);
   const slice = useSelector((store) => store.interval.slice);
+  const prices = useSelector((store) => store.coins.prices);
+  const [seriesLength, setSeriesLength] = useState(364);
 
-  // useEffect(() => {
-  //   console.log(interval, slice);
-  // }, [interval, slice]);
+  useEffect(() => {
+    if (prices[Object.keys(prices)[0]]) {
+      // console.log()
+      setSeriesLength(prices[Object.keys(prices)[0]].length);
+    }
+  }, [prices]);
 
   let intervalOptions = [
     { value: "m1", label: "One Minute" },
@@ -52,10 +57,15 @@ const Sidebar = (props) => {
               <br />
               <Form.Label>Data Points : {slice}</Form.Label>
               <Form.Range
-                min="1"
-                max="1000"
+                min="2"
+                value={seriesLength}
+                max={seriesLength}
                 onChange={(e) => dispatch(dispatchDataSlice(e.target.value))}
               />
+              <div className="trend-labels d-flex justify-content-between opacity-75">
+                <span>2</span>
+                <span>{seriesLength}</span>
+              </div>
             </Form.Group>
           </Form>
         </Offcanvas.Body>
