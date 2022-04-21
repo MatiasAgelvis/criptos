@@ -131,9 +131,9 @@ const ArticleCoin = (props) => {
                   <div className="d-flex">
                     {/*<div className='d-flex flex-column justify-content-between trend-labels'><span className='mt-4'>HI</span><span>LO</span></div>*/}
                     <div>
-                      <div className="trend-labels d-flex justify-content-between opacity-75">
+                      {/*<div className="trend-labels d-flex justify-content-between opacity-75">
                         Price Trend
-                      </div>
+                      </div> */}
                       <Trend
                         data={prices.slice(-slice)}
                         gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
