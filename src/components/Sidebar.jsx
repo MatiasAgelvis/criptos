@@ -20,7 +20,7 @@ const Sidebar = (props) => {
     { value: "m1", label: "One Minute" },
     { value: "m5", label: "Five Minutes" },
     { value: "m15", label: "Fifteen Minutes" },
-    { value: "m30", label: "Thirteen Minutes" },
+    { value: "m30", label: "Thirty Minutes" },
     { value: "h1", label: "One Hour" },
     { value: "h2", label: "Two Hours" },
     { value: "h6", label: "Six Hours" },
