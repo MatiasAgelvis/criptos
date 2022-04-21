@@ -107,6 +107,7 @@ const ArticleCoin = (props) => {
               <div className="vsplit-right">
                 {prices ? (
                   <div>
+                  <div className="trend-labels d-flex justify-content-between opacity-75">Price Trend</div>
                     <Trend
                       data={prices.slice(-slice)}
                       gradient={["#284CB2", "#35DAF7", "#F96CA8"]}

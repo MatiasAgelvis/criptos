@@ -58,7 +58,7 @@ const Sidebar = (props) => {
               <Form.Label>Data Points : {slice}</Form.Label>
               <Form.Range
                 min="2"
-                value={seriesLength}
+                value={slice}
                 max={seriesLength}
                 onChange={(e) => dispatch(dispatchDataSlice(e.target.value))}
               />
