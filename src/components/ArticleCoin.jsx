@@ -14,24 +14,24 @@ function looseRound(number, factor = 0.8) {
 }
 
 function simplifyTimeLabel(timer, unit) {
-  console.log(timer, unit);
+  // console.log(timer, unit);
   // minutes (m)
-  if (unit == "m" && timer >= 60) {
+  if (unit === "m" && timer >= 60) {
     timer = looseRound(timer / 60, 0.95);
     unit = "h";
   }
   // hours (h)
-  if (unit == "h" && timer >= 24) {
+  if (unit === "h" && timer >= 24) {
     timer = looseRound(timer / 24, 0.9);
     unit = "d";
   }
   // days (d)
-  if (unit == "d" && timer >= 30) {
+  if (unit === "d" && timer >= 30) {
     timer = looseRound(timer / 30, 0.85);
     unit = "M";
   }
   // months (M)
-  if (unit == "M" && timer >= 12) {
+  if (unit === "M" && timer >= 12) {
     timer = looseRound(timer / 12, 0.8);
     unit = "Y";
   }
