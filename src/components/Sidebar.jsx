@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Offcanvas, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { dispatchInterval } from "../redux/interval";
+import { dispatchInterval, dispatchDataSlice } from "../redux/interval";
+
 import "../styles/Sidebar.css";
 
 const Sidebar = (props) => {
@@ -9,10 +10,11 @@ const Sidebar = (props) => {
 
   const dispatch = useDispatch();
   const interval = useSelector((store) => store.interval.interval);
+  const slice = useSelector((store) => store.interval.slice);
 
-  useEffect(() => {
-    console.log(interval);
-  }, [interval]);
+  // useEffect(() => {
+  //   console.log(interval, slice);
+  // }, [interval, slice]);
 
   let intervalOptions = [
     { value: "m1", label: "One Minute" },
@@ -33,17 +35,29 @@ const Sidebar = (props) => {
           <Offcanvas.Title>Options</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Form.Select
-            aria-label="Select chart time interval"
-            onChange={(e) => dispatch(dispatchInterval(e.target.value))}
-            value={interval}
-          >
-            {intervalOptions.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </Form.Select>
+          <Form>
+            <Form.Group className="mb-3" controlId="formTime">
+              <Form.Label>Time Interval</Form.Label>
+              <Form.Select
+                aria-label="Select chart time interval"
+                onChange={(e) => dispatch(dispatchInterval(e.target.value))}
+                value={interval}
+              >
+                {intervalOptions.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </Form.Select>
+              <br />
+              <Form.Label>Data Points : {slice}</Form.Label>
+              <Form.Range
+                min="1"
+                max="1000"
+                onChange={(e) => dispatch(dispatchDataSlice(e.target.value))}
+              />
+            </Form.Group>
+          </Form>
         </Offcanvas.Body>
       </Offcanvas>
     </>

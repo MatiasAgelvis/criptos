@@ -11,20 +11,30 @@ const ArticleCoin = (props) => {
   const { id, symbol, name, priceUsd, explorer } = props;
 
   const dispatch = useDispatch();
-  const prices = useSelector((store) => store.coins.prices);
+  const prices = useSelector((store) => store.coins.prices[id]);
   const interval = useSelector((store) => store.interval.interval);
+  const slice = useSelector((store) => store.interval.slice);
 
   const [timeLabel, setTimeLabel] = useState("");
+  const [timeFactor, setTimeFactor] = useState(1);
 
   useEffect(() => {
     dispatch(getPrices(id, interval));
   }, [id, interval, dispatch]);
 
+  // console.log(prices)
 
   useEffect(() => {
-      if(interval.includes('m')){setTimeLabel('Minutes')}
-      if(interval.includes('h')){setTimeLabel('Hours')}
-      if(interval.includes('d')){setTimeLabel('Days')}
+    if (interval.includes("m")) {
+      setTimeLabel("Minutes");
+    }
+    if (interval.includes("h")) {
+      setTimeLabel("Hours");
+    }
+    if (interval.includes("d")) {
+      setTimeLabel("Days");
+    }
+    setTimeFactor(interval.match(/\d+/)[0]);
   }, [interval]);
 
   return (
@@ -56,10 +66,10 @@ const ArticleCoin = (props) => {
                 </Button>
               </div>
               <div className="vsplit-right">
-                {id in prices ? (
+                {prices ? (
                   <div>
                     <Trend
-                      data={prices[id]}
+                      data={prices.slice(-slice)}
                       gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
                       strokeLinecap="round"
                       autoDraw
@@ -70,7 +80,9 @@ const ArticleCoin = (props) => {
                       strokeWidth={3}
                     />
                     <div className="trend-labels d-flex justify-content-between opacity-75">
-                      <span>{prices[id].length} {timeLabel} Ago</span>
+                      <span>
+                        {prices.length * timeFactor} {timeLabel} Ago
+                      </span>
                       <span>Now</span>
                     </div>
                   </div>
