@@ -19,13 +19,14 @@ width: 35%;
 overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
-padding-right: 1.5rem;
+padding: 1.5rem 1.5rem 0.5rem 1.5rem;
 }
 .vsplit-right{
+    padding-right: 1rem;
     flex: 1;
 }
 
-.vsplit-right svg{
+.trend-plot{
     height: 100%;
     width: 100%;
 }

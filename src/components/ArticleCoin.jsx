@@ -128,13 +128,11 @@ const ArticleCoin = (props) => {
               </div>
               <div className="vsplit-right">
                 {prices ? (
-                  <div className="d-flex">
-                    {/*<div className='d-flex flex-column justify-content-between trend-labels'><span className='mt-4'>HI</span><span>LO</span></div>*/}
-                    <div>
+                  <div>
                       {/*<div className="trend-labels d-flex justify-content-between opacity-75">
-                        Price Trend
-                      </div> */}
+                        Price Trend </div> */}
                       <Trend
+                        className='trend-plot'
                         data={prices.slice(-slice)}
                         gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
                         strokeLinecap="round"
@@ -151,7 +149,6 @@ const ArticleCoin = (props) => {
                         </span>
                         <span>Now</span>
                       </div>
-                    </div>
                   </div>
                 ) : (
                   <div className="text-center">
