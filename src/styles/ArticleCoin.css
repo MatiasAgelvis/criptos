@@ -26,6 +26,10 @@ white-space: nowrap;
 }
 
 .vsplit-right svg{
-    height: 100%;
+    height: 90%;
     width: 100%;
+}
+
+.trend-labels{
+    font-size: 0.8rem;
 }

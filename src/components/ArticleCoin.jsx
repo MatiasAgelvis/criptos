@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrices } from "../redux/CriptoDucks";
 import { Container, Card, Button, Badge } from "react-bootstrap";
@@ -14,13 +14,18 @@ const ArticleCoin = (props) => {
   const prices = useSelector((store) => store.coins.prices);
   const interval = useSelector((store) => store.interval.interval);
 
+  const [timeLabel, setTimeLabel] = useState("");
+
   useEffect(() => {
     dispatch(getPrices(id, interval));
   }, [id, interval, dispatch]);
 
-  // useEffect(() => {
-  //   console.log(id, id in prices)
-  // }, [prices]);
+
+  useEffect(() => {
+      if(interval.includes('m')){setTimeLabel('Minutes')}
+      if(interval.includes('h')){setTimeLabel('Hours')}
+      if(interval.includes('d')){setTimeLabel('Days')}
+  }, [interval]);
 
   return (
     <>
@@ -52,17 +57,23 @@ const ArticleCoin = (props) => {
               </div>
               <div className="vsplit-right">
                 {id in prices ? (
-                  <Trend
-                    data={prices[id]}
-                    gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
-                    strokeLinecap="round"
-                    autoDraw
-                    autoDrawDuration={3000}
-                    autoDrawEasing="ease-in"
-                    smooth
-                    radius={1000}
-                    strokeWidth={3}
-                  />
+                  <div>
+                    <Trend
+                      data={prices[id]}
+                      gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
+                      strokeLinecap="round"
+                      autoDraw
+                      autoDrawDuration={3000}
+                      autoDrawEasing="ease-in"
+                      smooth
+                      radius={1000}
+                      strokeWidth={3}
+                    />
+                    <div className="trend-labels d-flex justify-content-between opacity-75">
+                      <span>{prices[id].length} {timeLabel} Ago</span>
+                      <span>Now</span>
+                    </div>
+                  </div>
                 ) : (
                   <div className="text-center">
                     <div className="spinner-grow text-primary" role="status">
