@@ -25,6 +25,7 @@ const ArticleCoin = (props) => {
   // console.log(prices)
 
   useEffect(() => {
+    console.log(interval.match(/\d+/)[0])
     if (interval.includes("m")) {
       setTimeLabel("Minutes");
     }
@@ -35,7 +36,7 @@ const ArticleCoin = (props) => {
       setTimeLabel("Days");
     }
     setTimeFactor(interval.match(/\d+/)[0]);
-  }, [interval]);
+  }, [interval, slice]);
 
   return (
     <>
@@ -81,7 +82,7 @@ const ArticleCoin = (props) => {
                     />
                     <div className="trend-labels d-flex justify-content-between opacity-75">
                       <span>
-                        {prices.length * timeFactor} {timeLabel} Ago
+                        {prices.slice(-slice).length * timeFactor} {timeLabel} Ago
                       </span>
                       <span>Now</span>
                     </div>
