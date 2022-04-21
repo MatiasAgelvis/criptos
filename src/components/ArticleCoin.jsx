@@ -51,6 +51,14 @@ const ArticleCoin = (props) => {
   const [timeLabel, setTimeLabel] = useState("");
   const [timeFactor, setTimeFactor] = useState(1);
 
+  // if price is lower than 1 cent change the unit
+  let moneyUnit = "$";
+  let priceFactor = 1;
+  if (priceUsd < 0.01) {
+    moneyUnit = "\u00A2";
+    priceFactor = 100;
+  }
+
   useEffect(() => {
     dispatch(getPrices(id, interval));
   }, [id, interval, dispatch]);
@@ -94,8 +102,22 @@ const ArticleCoin = (props) => {
             </Card.Title>
             <div className="vsplit-body">
               <div className="vsplit-left">
-                Price Today : $ {dollarUSLocale.format(priceUsd)}
+                Price Today : {moneyUnit}{" "}
+                {dollarUSLocale.format(priceUsd * priceFactor)}
                 <br />
+                Min : {moneyUnit}{" "}
+                {prices
+                  ? dollarUSLocale.format(
+                      Math.min(...prices.slice(-slice)) * priceFactor
+                    )
+                  : "-"}
+                <br />
+                Max : {moneyUnit}{" "}
+                {prices
+                  ? dollarUSLocale.format(
+                      Math.max(...prices.slice(-slice)) * priceFactor
+                    )
+                  : "-"}
                 <br />
                 {explorer}
                 <br />
@@ -106,24 +128,29 @@ const ArticleCoin = (props) => {
               </div>
               <div className="vsplit-right">
                 {prices ? (
-                  <div>
-                  <div className="trend-labels d-flex justify-content-between opacity-75">Price Trend</div>
-                    <Trend
-                      data={prices.slice(-slice)}
-                      gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
-                      strokeLinecap="round"
-                      autoDraw
-                      autoDrawDuration={3000}
-                      autoDrawEasing="ease-in"
-                      smooth
-                      radius={1000}
-                      strokeWidth={3}
-                    />
-                    <div className="trend-labels d-flex justify-content-between opacity-75">
-                      <span>
-                        {timeFactor} {timeLabel} Ago
-                      </span>
-                      <span>Now</span>
+                  <div className="d-flex">
+                    {/*<div className='d-flex flex-column justify-content-between trend-labels'><span className='mt-4'>HI</span><span>LO</span></div>*/}
+                    <div>
+                      <div className="trend-labels d-flex justify-content-between opacity-75">
+                        Price Trend
+                      </div>
+                      <Trend
+                        data={prices.slice(-slice)}
+                        gradient={["#284CB2", "#35DAF7", "#F96CA8"]}
+                        strokeLinecap="round"
+                        autoDraw
+                        autoDrawDuration={3000}
+                        autoDrawEasing="ease-in"
+                        smooth
+                        radius={1000}
+                        strokeWidth={3}
+                      />
+                      <div className="trend-labels d-flex justify-content-between opacity-75">
+                        <span>
+                          {timeFactor} {timeLabel} Ago
+                        </span>
+                        <span>Now</span>
+                      </div>
                     </div>
                   </div>
                 ) : (
