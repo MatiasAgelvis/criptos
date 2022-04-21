@@ -1,3 +1,6 @@
+// TODO
+// price of shiba too small to display
+// implement star button
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrices } from "../redux/CriptoDucks";
@@ -5,6 +8,36 @@ import { Container, Card, Button, Badge } from "react-bootstrap";
 import { BsStar } from "react-icons/bs";
 import "../styles/ArticleCoin.css";
 import Trend from "react-trend";
+
+function looseRound(number, factor = 0.8) {
+  return number % 1 >= factor ? Math.ceil(number) : Math.floor(number);
+}
+
+function simplifyTimeLabel(timer, unit) {
+  console.log(timer, unit);
+  // minutes (m)
+  if (unit == "m" && timer >= 60) {
+    timer = looseRound(timer / 60, 0.95);
+    unit = "h";
+  }
+  // hours (h)
+  if (unit == "h" && timer >= 24) {
+    timer = looseRound(timer / 24, 0.9);
+    unit = "d";
+  }
+  // days (d)
+  if (unit == "d" && timer >= 30) {
+    timer = looseRound(timer / 30, 0.85);
+    unit = "M";
+  }
+  // months (M)
+  if (unit == "M" && timer >= 12) {
+    timer = looseRound(timer / 12, 0.8);
+    unit = "Y";
+  }
+
+  return [timer, unit];
+}
 
 const ArticleCoin = (props) => {
   const dollarUSLocale = Intl.NumberFormat("en-US");
@@ -22,21 +55,26 @@ const ArticleCoin = (props) => {
     dispatch(getPrices(id, interval));
   }, [id, interval, dispatch]);
 
-  // console.log(prices)
-
   useEffect(() => {
-    console.log(interval.match(/\d+/)[0])
-    if (interval.includes("m")) {
-      setTimeLabel("Minutes");
+    if (prices) {
+      let [timer, unit] = simplifyTimeLabel(
+        prices.slice(-slice).length * interval.match(/\d+/)[0],
+        interval.match(/[A-Za-z]/)[0]
+      );
+
+      setTimeFactor(timer);
+
+      let timeUnits = {
+        m: "Minute",
+        h: "Hour",
+        d: "Day",
+        M: "Month",
+        Y: "Year",
+      };
+
+      setTimeLabel(timeUnits[unit] + (timer > 1 ? "s" : ""));
     }
-    if (interval.includes("h")) {
-      setTimeLabel("Hours");
-    }
-    if (interval.includes("d")) {
-      setTimeLabel("Days");
-    }
-    setTimeFactor(interval.match(/\d+/)[0]);
-  }, [interval, slice]);
+  }, [interval, prices, slice]);
 
   return (
     <>
@@ -82,7 +120,7 @@ const ArticleCoin = (props) => {
                     />
                     <div className="trend-labels d-flex justify-content-between opacity-75">
                       <span>
-                        {prices.slice(-slice).length * timeFactor} {timeLabel} Ago
+                        {timeFactor} {timeLabel} Ago
                       </span>
                       <span>Now</span>
                     </div>
