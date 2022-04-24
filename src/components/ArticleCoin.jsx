@@ -1,6 +1,3 @@
-// TODO
-// price of shiba too small to display
-// implement star button
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrices } from "../redux/CriptoDucks";
