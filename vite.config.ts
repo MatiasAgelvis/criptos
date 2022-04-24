@@ -9,6 +9,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
   },
+  base : '/criptos/',
   plugins: [
     reactRefresh(),
     svgrPlugin({
